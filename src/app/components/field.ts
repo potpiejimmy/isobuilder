@@ -7,6 +7,7 @@ import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 export class IsoFieldComponent implements OnInit {
 
     _val: string;
+    _parsing: boolean = false;
 
     @Input()
     def: any;
@@ -14,18 +15,25 @@ export class IsoFieldComponent implements OnInit {
     @Input()
     no: Number;
 
-    @Input()
-    init: string;
-
     @Output()
     onChange = new EventEmitter<any>();
 
     ngOnInit(): void {
+    }
+
+    @Input()
+    set init(init) {
+        if (this._parsing) return;
         let v = '';
-        if (this.init) {
-            v = this.init;
+        if (init) {
+            v = init;
+            if (this.def && this.def.lenlen) {
+                // remove length field:
+                v = v.substr(this.def.lenlen*2);
+            }
         }
-        setTimeout(()=>this.val = v,0);
+        this._val = v;
+        setTimeout(()=>this.emitVal(v),0);
     }
 
     mask(): string {
@@ -45,7 +53,13 @@ export class IsoFieldComponent implements OnInit {
     }
 
     set val(v) {
+        this._parsing = true;
         this._val = v;
+        this.emitVal(v);
+        setTimeout(()=>this._parsing = false, 500);
+    }
+
+    emitVal(v) {
         let e = this.lengthField();
         e += v.replace(/_/g,'');
         if (e.length%2) e += '0';

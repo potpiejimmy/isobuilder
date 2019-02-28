@@ -31,3 +31,9 @@ table.bmp th span
   transform: rotate(180deg);
   white-space: nowrap;
 }
+
+#versionfooter {
+  float: right;
+  margin-right: 1em;
+  font-size: 0.75em;
+}

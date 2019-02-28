@@ -1,10 +1,10 @@
+<p-messages [(value)]="msgs"></p-messages>
 <p-card header="ISO 8583 message (hex)">
   <input type="text" [(ngModel)]="result" style="width: 100%" pInputText pKeyFilter="hex"/>
   <p style="margin-top: .5em;">
     Len: {{result.length/2}} bytes
   </p>
-</p-card>
-<p-card header="Message Editor">
+  <h3>Message Editor</h3>
   <table class="main">
     <tr>
       <td>Message Type</td>
@@ -37,3 +37,4 @@
   </table>
 </p-card>
 <p></p>
+<div id="versionfooter">{{version}}</div>

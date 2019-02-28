@@ -1,4 +1,4 @@
-<p-inputMask *ngIf="def && def.len" [size]="def.len*2" [(ngModel)]="val" [mask]="mask()" characterPattern="[A-Fa-f0-9]"></p-inputMask>
+<p-inputMask *ngIf="def && def.len" [size]="def.len*2+2" [(ngModel)]="val" [mask]="mask()" characterPattern="[A-Fa-f0-9]"></p-inputMask>
 <div *ngIf="def && def.lenlen">
     {{lengthField()}}
     <input pInputText size="100" [(ngModel)]="val" pKeyFilter="hex" placeholder="Enter hex"/>

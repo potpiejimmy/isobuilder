@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import * as BigInt from "big-integer";
-import { parse } from 'url';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,9 @@ import { parse } from 'url';
 })
 export class AppComponent {
 
+  version = environment.version;
+  msgs = [];
+  
   bmp0 = []; bmp1 = []; bmps = [];
   _result: string = "0100";
   _msgtype: string = "0100";
@@ -89,11 +92,11 @@ export class AppComponent {
   }
 
   bitmapToHex(bmp, offset=0) {
-    let res = BigInt(Math.pow(2,64));
+    let res = new Array(64).fill('0');
     for (let i in bmp) {
-      res = res.plus(Math.pow(2,64+offset-bmp[i]));
+      res[bmp[i]-1-offset] = '1';
     }
-    return res.toString(16).substr(1);
+    return BigInt('1'+res.join(""),2).toString(16).substr(1);
   }
 
   hexToBitmap(hex, offset=0) {
@@ -119,6 +122,7 @@ export class AppComponent {
       }
     }
     this._result = res;
+    this.msgs = [];
   }
 
   parse(msg) {
@@ -135,43 +139,38 @@ export class AppComponent {
     for (let i in this.bmp0) {
       let no = this.bmp0[i];
       if (no>1 && this.isodef[no]) {
-        let len = this.isodef[no].len;
-        if (this.isodef[no].lenlen) {
-          len = msg.substr(offset, this.isodef[no].lenlen*2);
-          offset += this.isodef[no].lenlen*2;
-          len = parseInt(len.replace(/[fF]/g,''));
-        }
-        this.bmps[no] = msg.substr(offset, len*2);
-        offset += len*2;
+        offset = this.parseField(msg, offset, no);
       }
     }
     if (this.bmp0[0]==1) {
       for (let i in this.bmp1) {
         let no = this.bmp1[i];
         if (this.isodef[no]) {
-          let len = this.isodef[no].len;
-          if (this.isodef[no].lenlen) {
-            len = msg.substr(offset, this.isodef[no].lenlen*2);
-            offset += this.isodef[no].lenlen*2;
-            len = parseInt(len.replace(/[fF]/g,''));
-          }
-          this.bmps[no] = msg.substr(offset, len*2);
-          offset += len*2;
+          offset = this.parseField(msg, offset, no);
         }
       }
     } else {
       this.bmp1 = [];
     }
+    this.msgs = [];
+    if (offset != msg.length) {
+      this.msgs.push({severity:'error', summary:'Invalid message', detail:'Invalid message length, expected length is '+offset/2});
+    } else {
+      this.msgs.push({severity:'success', summary:'Message okay', detail:'Message successfully parsed'});
+    }
     setTimeout(()=>this._parsing = false, 500);
   }
 
-  get result() {
-    return this._result;
-  }
-
-  set result(msg: string) {
-    this._result = msg;
-    this.parse(msg);
+  parseField(msg: string, offset: number, no: number) {
+    let len = this.isodef[no].len;
+    if (this.isodef[no].lenlen) {
+      len = msg.substr(offset, this.isodef[no].lenlen*2);
+      len = parseInt(len.replace(/[fF]/g,''));
+      len += this.isodef[no].lenlen;
+    }
+    this.bmps[no] = msg.substr(offset, len*2);
+    offset += len*2;
+    return offset;
   }
 
   get msgtype() {
@@ -181,5 +180,14 @@ export class AppComponent {
   set msgtype(t) {
     this._msgtype = t;
     this.build();
+  }
+
+  get result() {
+    return this._result;
+  }
+
+  set result(msg: string) {
+    this._result = msg;
+    this.parse(msg);
   }
 }

@@ -9,6 +9,8 @@ import { CardModule } from 'primeng/card';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 
 // App
 import { AppComponent } from './app.component';
@@ -30,7 +32,9 @@ import { IsoFieldComponent } from './components/field';
     CardModule,
     InputMaskModule,
     InputTextModule,
-    KeyFilterModule
+    KeyFilterModule,
+    MessagesModule,
+    MessageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
