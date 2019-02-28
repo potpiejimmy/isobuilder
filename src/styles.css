@@ -1,10 +1,26 @@
 @import "~primeng/resources/themes/nova-light/theme.css";
 @import "~primeng/resources/primeng.min.css";
 
+table {
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+table.main td {
+  border: 1px solid black;
+  padding: 1em;
+}
+
 table.bmp th
 {
   vertical-align: bottom;
   text-align: center;
+}
+
+table.bmp td
+{
+  border: none;
+  padding: 0;
 }
 
 table.bmp th span 
@@ -14,8 +30,4 @@ table.bmp th span
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   white-space: nowrap;
-}
-
-table.bmp {
-    border-spacing: 0px;
 }

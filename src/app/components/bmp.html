@@ -1,0 +1,8 @@
+<table class="bmp">
+    <tr>
+        <th *ngFor="let i of bitmap"><span>{{i}}</span></th>
+    </tr>
+    <tr>
+        <td *ngFor="let i of bitmap"><p-checkbox name="groupname" [value]="i" [(ngModel)]="selectedValues" (onChange)="bmpClicked()"></p-checkbox></td>
+    </tr>
+</table>

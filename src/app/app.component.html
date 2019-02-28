@@ -1,9 +1,39 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<table class="bmp">
-  <tr>
-    <th *ngFor="let i of bitmap"><span>{{i}}</span></th>
-  </tr>
-  <tr>
-    <td *ngFor="let i of bitmap"><p-checkbox name="groupname" [value]="i" [(ngModel)]="selectedValues" (onChange)="bmpClicked()"></p-checkbox></td>
-  </tr>
-</table>
+<p-card header="Build ISO 8583 message">
+  <table class="main">
+    <tr>
+      <td>Message Type</td>
+      <td>
+        <p-inputMask [(ngModel)]="msgtype" mask="9999" size="4" required></p-inputMask>
+      </td>
+    </tr>
+    <tr>
+      <td>BMP 0<br/>Primary BMP</td>
+      <td>
+        <bmp (onChange)="bmp0Change($event)"></bmp>
+      </td>
+    </tr>
+    <tr *ngFor="let no of bmp0">
+      <td *ngIf="no==1">BMP 1<br/>Secondary BMP</td>
+      <td *ngIf="no==1">
+        <bmp [startNo]="65" (onChange)="bmp1Change($event)"></bmp>
+      </td>
+      <td *ngIf="no>1">BMP {{no}}<br/>{{fieldLabel(no)}}</td>
+      <td *ngIf="no>1">
+        <isofield [no]="no" [def]="isodef[no]" (onChange)="bmpChange($event)"></isofield>
+      </td>
+    </tr>
+    <tr *ngFor="let no of bmp1">
+      <td>BMP {{no}}<br/>{{fieldLabel(no)}}</td>
+      <td>
+        <isofield [no]="no" [def]="isodef[no]" (onChange)="bmpChange($event)"></isofield>
+      </td>
+    </tr>
+  </table>
+</p-card>
+<p></p>
+<p-card header="Result message">
+    <input type="text" [value]="result" style="width: 100%" pInputText readonly="true" />
+    <p style="margin-top: .5em;">
+      Len: {{result.length/2}} bytes
+    </p>
+</p-card>
