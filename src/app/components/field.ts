@@ -14,11 +14,18 @@ export class IsoFieldComponent implements OnInit {
     @Input()
     no: Number;
 
+    @Input()
+    init: string;
+
     @Output()
     onChange = new EventEmitter<any>();
 
     ngOnInit(): void {
-        this.val = '';
+        let v = '';
+        if (this.init) {
+            v = this.init;
+        }
+        setTimeout(()=>this.val = v,0);
     }
 
     mask(): string {

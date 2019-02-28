@@ -1,4 +1,10 @@
-<p-card header="Build ISO 8583 message">
+<p-card header="ISO 8583 message (hex)">
+  <input type="text" [(ngModel)]="result" style="width: 100%" pInputText pKeyFilter="hex"/>
+  <p style="margin-top: .5em;">
+    Len: {{result.length/2}} bytes
+  </p>
+</p-card>
+<p-card header="Message Editor">
   <table class="main">
     <tr>
       <td>Message Type</td>
@@ -9,31 +15,25 @@
     <tr>
       <td>BMP 0<br/>Primary BMP</td>
       <td>
-        <bmp (onChange)="bmp0Change($event)"></bmp>
+        <bmp [selectedValues]="bmp0" (onChange)="bmp0Change($event)"></bmp>
       </td>
     </tr>
     <tr *ngFor="let no of bmp0">
       <td *ngIf="no==1">BMP 1<br/>Secondary BMP</td>
       <td *ngIf="no==1">
-        <bmp [startNo]="65" (onChange)="bmp1Change($event)"></bmp>
+        <bmp [selectedValues]="bmp1" [startNo]="65" (onChange)="bmp1Change($event)"></bmp>
       </td>
       <td *ngIf="no>1">BMP {{no}}<br/>{{fieldLabel(no)}}</td>
       <td *ngIf="no>1">
-        <isofield [no]="no" [def]="isodef[no]" (onChange)="bmpChange($event)"></isofield>
+        <isofield [init]="bmps[no]" [no]="no" [def]="isodef[no]" (onChange)="bmpChange($event)"></isofield>
       </td>
     </tr>
     <tr *ngFor="let no of bmp1">
       <td>BMP {{no}}<br/>{{fieldLabel(no)}}</td>
       <td>
-        <isofield [no]="no" [def]="isodef[no]" (onChange)="bmpChange($event)"></isofield>
+        <isofield [init]="bmps[no]" [no]="no" [def]="isodef[no]" (onChange)="bmpChange($event)"></isofield>
       </td>
     </tr>
   </table>
 </p-card>
 <p></p>
-<p-card header="Result message">
-    <input type="text" [value]="result" style="width: 100%" pInputText readonly="true" />
-    <p style="margin-top: .5em;">
-      Len: {{result.length/2}} bytes
-    </p>
-</p-card>

@@ -6,6 +6,8 @@ import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 })
 export class BmpComponent implements OnInit {
     bitmap = [];
+    
+    @Input()
     selectedValues = [];
 
     @Input()
