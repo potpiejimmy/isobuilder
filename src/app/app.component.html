@@ -23,7 +23,10 @@
       <td *ngIf="no==1">
         <bmp [selectedValues]="bmp1" [startNo]="65" (onChange)="bmp1Change($event)"></bmp>
       </td>
-      <td *ngIf="no>1">BMP {{no}}<br/>{{fieldLabel(no)}}</td>
+      <td *ngIf="no>1">
+        BMP {{no}}<br/>{{fieldLabel(no)}}
+        <div *ngIf="no==3 && emv"><img width="32" src="assets/emvchip.png"/></div>
+      </td>
       <td *ngIf="no>1">
         <isofield [init]="bmps[no]" [no]="no" [def]="isodef[no]" [emv]="emv" (onChange)="bmpChange($event)"></isofield>
       </td>

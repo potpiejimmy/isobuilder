@@ -2,5 +2,8 @@
 <div *ngIf="def && def.lenlen">
     {{lengthField()}}
     <input pInputText size="100" [(ngModel)]="val" pKeyFilter="hex" placeholder="Enter hex"/>
+    <span *ngIf="val.length%2"> 0</span>
 </div>
-<span *ngIf="(def && def.alpha) || (emv && def.len_emv)"> {{valAlpha}}</span>
+<div *ngIf="def && def.alpha">
+    {{valAlpha}}
+</div>

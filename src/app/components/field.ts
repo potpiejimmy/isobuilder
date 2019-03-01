@@ -76,7 +76,7 @@ export class IsoFieldComponent implements OnInit {
         e += v.replace(/_/g,'');
         if (e.length%2) e += '0';
         if (this.len) {
-            while (e.length < this.len*2) e += '00';
+            while (e.length < this.len*2) e += this.def.alpha ? '40' : '00';
         }
         this.onChange.emit({no:this.no, val:e});
     }
