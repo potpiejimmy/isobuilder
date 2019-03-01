@@ -46,9 +46,9 @@ export class AppComponent {
     37: {label:"REF NO.", len:6},
     38: {label:"AZREF", len:3},
     39: {label:"RC", len:1},
-    41: {label:"ATMID", len:8},
-    42: {label:"BANKCODE", len:15},
-    43: {label:"ATMLOCATION", len:40},
+    41: {label:"ATMID", len:4, len_emv:8},
+    42: {label:"BANKCODE", len:8, len_emv:15},
+    43: {label:"ATMLOCATION", len:40, alpha:true},
     47: {label:"ACQ ACCT DTA", lenlen:3},
     49: {label:"COUNTRYKEY", len:2},
     51: {label:"CURRENCYCODE ISSUER", len:2},
@@ -161,8 +161,12 @@ export class AppComponent {
     setTimeout(()=>this._parsing = false, 500);
   }
 
+  get emv(): boolean {
+    return this.bmps[3] && this.bmps[3].endsWith('3');
+  }
+
   parseField(msg: string, offset: number, no: number) {
-    let len = this.isodef[no].len;
+    let len = this.emv && this.isodef[no].len_emv ? this.isodef[no].len_emv : this.isodef[no].len;
     if (this.isodef[no].lenlen) {
       len = msg.substr(offset, this.isodef[no].lenlen*2);
       len = parseInt(len.replace(/[fF]/g,''));

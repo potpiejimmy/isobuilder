@@ -25,13 +25,13 @@
       </td>
       <td *ngIf="no>1">BMP {{no}}<br/>{{fieldLabel(no)}}</td>
       <td *ngIf="no>1">
-        <isofield [init]="bmps[no]" [no]="no" [def]="isodef[no]" (onChange)="bmpChange($event)"></isofield>
+        <isofield [init]="bmps[no]" [no]="no" [def]="isodef[no]" [emv]="emv" (onChange)="bmpChange($event)"></isofield>
       </td>
     </tr>
     <tr *ngFor="let no of bmp1">
       <td>BMP {{no}}<br/>{{fieldLabel(no)}}</td>
       <td>
-        <isofield [init]="bmps[no]" [no]="no" [def]="isodef[no]" (onChange)="bmpChange($event)"></isofield>
+        <isofield [init]="bmps[no]" [no]="no" [def]="isodef[no]" [emv]="emv" (onChange)="bmpChange($event)"></isofield>
       </td>
     </tr>
   </table>
