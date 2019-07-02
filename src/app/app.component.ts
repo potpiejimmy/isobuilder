@@ -44,8 +44,8 @@ export class AppComponent {
     35: {label:"TRACK2", lenlen:2},
     36: {label:"SOURCE ACCOUNT", len:5},
     37: {label:"REF NO.", len:6},
-    38: {label:"AZREF", len:3},
-    39: {label:"RC", len:1},
+    38: {label:"AZREF", len:3, len_emv:6},
+    39: {label:"RC", len:1, len_emv:2},
     41: {label:"ATMID", len:4, len_emv:8},
     42: {label:"BANKCODE", len:8, len_emv:15},
     43: {label:"ATMLOCATION", len:40, alpha:true},
@@ -161,8 +161,8 @@ export class AppComponent {
     setTimeout(()=>this._parsing = false, 500);
   }
 
-  get emv(): boolean {
-    return this.bmps[3] && this.bmps[3].endsWith('3');
+  get emv(): boolean { // EMV AKZ ...3 or international (ECI)
+    return (this.bmps[3] && this.bmps[3].endsWith('3')) || this._msgtype && this._msgtype.startsWith('01');
   }
 
   parseField(msg: string, offset: number, no: number) {
