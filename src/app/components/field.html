@@ -4,6 +4,6 @@
     <input pInputText size="100" [(ngModel)]="val" pKeyFilter="hex" placeholder="Enter hex"/>
     <span *ngIf="val.length%2"> 0</span>
 </div>
-<div *ngIf="def && def.alpha">
+<div *ngIf="def && (def.alpha || (emv && def.alpha_emv))">
     {{valAlpha}}
 </div>
