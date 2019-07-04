@@ -17,6 +17,7 @@ import { MessageModule } from 'primeng/message';
 import { AppComponent } from './app.component';
 import { BmpComponent } from './components/bmp';
 import { IsoFieldComponent } from './components/field';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,10 @@ import { IsoFieldComponent } from './components/field';
     InputTextModule,
     KeyFilterModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    // Remark: because you havent defined any routes, I have to pass an empty
+    // route collection to forRoot, as the first parameter is mandatory.
+    RouterModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent]

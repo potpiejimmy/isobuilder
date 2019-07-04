@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as BigInt from "big-integer";
 import { environment } from '../environments/environment';
 
@@ -68,7 +69,11 @@ export class AppComponent {
    128: {label:"MAC2", len:8}
   }
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
+    // auto-parse incoming messages via ?msg= query param:
+    this.route.queryParams.subscribe(params => {
+      if (params.msg && params.msg.length>12) this.result = params.msg;
+    });
   }
 
   bmp0Change(bmp) {
